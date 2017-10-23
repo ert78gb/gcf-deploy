@@ -13,7 +13,7 @@ export { Options } from './models/options';
 
 export async function deploy(options: Options): Promise<void> {
   const _options: Options = { ...DEFAULT_OPTIONS, ...options } as any;
-  const destination = path.resolve(options.cwd, options.distDirectory);
+  const destination = path.resolve(_options.cwd, options.distDirectory);
   const zipFilePath = path.join(destination, '../package.zip');
   let pkgJson;
 
@@ -26,13 +26,13 @@ export async function deploy(options: Options): Promise<void> {
   if (!_options.artifact)
     _options.artifact = `${pkgJson.name}/${pkgJson.name}-${pkgJson.version}.zip`;
 
-  const googleProvider = new GoogleProvider(options.credentials);
-  let bucket = await googleProvider.getBucket(options.bucket);
+  const googleProvider = new GoogleProvider(_options.credentials);
+  let bucket = await googleProvider.getBucket(_options.bucket);
   if (!bucket) {
     const newBucket: Bucket = {
-      project: options.projectId,
-      name: options.bucket,
-      location: options.location || 'us-central1',
+      project: _options.projectId,
+      name: _options.bucket,
+      location: _options.location || 'us-central1',
       storageClass: 'REGIONAL'
     };
     bucket = await googleProvider.insertBucket(newBucket);
@@ -45,7 +45,7 @@ export async function deploy(options: Options): Promise<void> {
 
   let storageObject = await googleProvider.getStorageObject(storage);
 
-  if (storageObject && !options.overwrite)
+  if (storageObject && !_options.overwrite)
     return Promise.reject(new Error('The function with this version already exists'));
 
   storageObject = await googleProvider.insertStorageObject(storage, zipFilePath);
