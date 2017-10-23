@@ -1,0 +1,56 @@
+{
+  "name": "gcf-deploy",
+  "version": "1.0.0",
+  "description": "Library that deploy google functions",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project ./src/tsconfig.json",
+    "test": "mocha",
+    "lint": "tslint --project tsconfig.json --type-check --fix",
+    "release": "standard-version"
+  },
+  "keywords": [
+    "Google",
+    "Cloud",
+    "Functions",
+    "deploy"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ert78gb/gcf-deploy.git"
+  },
+  "author": "Róbert Kiss <ert78gb@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "dist/"
+  ],
+  "directories": {
+    "lib": "dist"
+  },
+  "dependencies": {
+    "angular-tslint-rules": "^1.0.4",
+    "archiver": "^2.1.0",
+    "debug": "^3.1.0",
+    "fs-extra": "^4.0.2",
+    "glob": "^7.1.2",
+    "googleapis": "^22.2.0",
+    "is": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/archiver": "^2.0.1",
+    "@types/chai": "^4.0.4",
+    "@types/debug": "^0.0.30",
+    "@types/fs-extra": "^4.0.2",
+    "@types/glob": "^5.0.33",
+    "@types/is": "^0.0.17",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.46",
+    "mocha": "^4.0.1",
+    "chai": "^4.1.2",
+    "standard-version": "^4.2.0",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3",
+    "tslint": "^5.8.0"
+  }
+}
