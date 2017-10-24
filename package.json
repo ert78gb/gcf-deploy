@@ -1,6 +1,6 @@
 {
   "name": "gcf-deploy",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Library that deploy google functions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
