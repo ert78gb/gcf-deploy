@@ -29,7 +29,6 @@
     "lib": "dist"
   },
   "dependencies": {
-    "angular-tslint-rules": "^1.0.4",
     "archiver": "^2.1.0",
     "debug": "^3.1.0",
     "fs-extra": "^4.0.2",
@@ -46,6 +45,7 @@
     "@types/is": "^0.0.17",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.46",
+    "angular-tslint-rules": "^1.0.4",
     "mocha": "^4.0.1",
     "chai": "^4.1.2",
     "standard-version": "^4.2.0",
