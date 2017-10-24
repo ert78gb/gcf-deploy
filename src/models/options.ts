@@ -1,9 +1,10 @@
 import { Locations } from './locations';
 import { FunctionObject } from './function-object';
+import { CredentialOption } from './credential-option';
 
 export interface Options {
   projectId: string;
-  credentials: string;
+  credentials: CredentialOption;
   location?: Locations;
   distDirectory: string;
   globs?: Array<string>;
