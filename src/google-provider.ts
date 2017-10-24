@@ -5,14 +5,20 @@ import { escape } from 'querystring';
 import { Bucket } from './models/bucket';
 import { StorageObject } from './models/storage-object';
 import { FunctionObject } from './models/function-object';
+import { CredentialOption } from './models/credential-option';
 
 const FUNCTION_VERSION = 'v1beta2';
 const STORAGE_VERSION = 'v1';
 
+interface GoogleCredential {
+  email: string;
+  privateKey: string;
+}
+
 export class GoogleProvider {
   private _authClient;
 
-  constructor(private credentials: string) {
+  constructor(private credentials: CredentialOption) {
 
   }
 
@@ -230,12 +236,13 @@ export class GoogleProvider {
     if (this._authClient)
       return Promise.resolve(this._authClient);
 
+    const credential = this.getCredential();
+
     return new Promise((resolve, reject) => {
-      const keyFile = readJSONSync(this.credentials);
       this._authClient = new google.auth
-        .JWT(keyFile.client_email,
+        .JWT(credential.email,
           undefined,
-          keyFile.private_key,
+          credential.privateKey,
           ['https://www.googleapis.com/auth/cloud-platform']
         );
 
@@ -246,5 +253,28 @@ export class GoogleProvider {
         return resolve(this._authClient);
       });
     });
+  }
+
+  private getCredential(): GoogleCredential {
+    if (this.credentials.type === 'file')
+      return this.getCredentialFromFile();
+    else if (this.credentials.type === 'env')
+      return this.getCredentialFromEnv();
+  }
+
+  private getCredentialFromFile(): GoogleCredential {
+    const keyFile = readJSONSync(this.credentials.filePath);
+
+    return {
+      email: keyFile.client_email,
+      privateKey: keyFile.private_key
+    };
+  }
+
+  private getCredentialFromEnv(): GoogleCredential {
+    return {
+      email: process.env[this.credentials.env.clientEmail],
+      privateKey: process.env[this.credentials.env.privateKey]
+    };
   }
 }
